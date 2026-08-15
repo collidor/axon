@@ -1,0 +1,201 @@
+:root {
+  --accent: #38bdf8;
+  --bg: #020617;
+  --panel: #1e293b;
+  --border: #334155;
+  --text: #f8fafc;
+}
+
+div#app {
+  width: 100vw;
+  height: 100vh;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  position: fixed;
+  width: 100%;
+}
+
+.ui-input {
+  background: #0f172a;
+  border: 1px solid var(--border);
+  color: var(--accent);
+  font-size: 14px;
+  padding: 8px;
+  border-radius: 6px;
+  outline: none;
+  font-family: monospace;
+}
+
+/* Node Styling - Grid Layout */
+axon-box {
+  position: absolute;
+  display: grid;
+  grid-template-columns: minmax(90px, 1fr);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: white;
+  min-width: 200px;
+  border-radius: 8px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  user-select: none;
+  touch-action: none;
+  will-change: transform;
+  contain: layout style;
+}
+
+.label {
+  text-align: center;
+}
+
+.axon-header {
+  grid-column: 1 / -1;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.02);
+  padding: 12px;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.axon-content {
+  grid-column: 1 / -1;
+}
+
+.ports-grid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 4px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+axon-box.is-selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+  z-index: 20;
+}
+axon-box.dragging {
+  opacity: 0.8;
+  z-index: 100;
+  transition: none;
+}
+
+/* Port Elements */
+axon-port-in,
+axon-port-out {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 11px;
+  position: relative;
+  cursor: crosshair;
+  color: #94a3b8;
+  touch-action: none;
+  pointer-events: auto;
+}
+
+axon-port-in {
+  --port-color: var(--accent);
+  grid-column: 1;
+  padding-left: 16px;
+}
+axon-port-out {
+  --port-color: #10b981;
+  grid-column: 2;
+  padding-right: 16px;
+  justify-content: flex-end;
+}
+
+axon-port-in::after,
+axon-port-out::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: #94a3b8;
+  border: 2px solid var(--panel);
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  pointer-events: none;
+  transition: all 0.1s ease-out;
+}
+axon-port-in::after {
+  left: -7px;
+  background: var(--port-color);
+}
+axon-port-out::after {
+  right: -7px;
+  background: var(--port-color);
+}
+
+axon-port-in.valid-target::after,
+axon-port-out.valid-target::after {
+  background: #fff;
+  box-shadow: 0 0 15px #fff;
+  transform: translateY(-50%) scale(1.2);
+  border-color: #fff;
+}
+
+axon-edge {
+  display: contents;
+}
+axon-edge > * {
+  position: absolute;
+  transform: translate3d(-50%, -50%, 0);
+  pointer-events: none;
+  z-index: 5;
+}
+.edge-badge {
+  background: #0f172a;
+  border: 1px solid var(--border);
+  color: var(--accent);
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  white-space: nowrap;
+  font-weight: bold;
+}
+
+body.is-interacting {
+  cursor: grabbing !important;
+}
+body.is-connecting {
+  cursor: crosshair !important;
+}
+
+input[type="range"] {
+  height: 6px;
+  -webkit-appearance: none;
+  background: #334155;
+  border-radius: 5px;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #1e293b;
+  background: var(--accent);
+}
+.app-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+}
+
+h3 {
+  margin: 4px 8px;
+}
