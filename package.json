@@ -7,7 +7,7 @@
     "description":  "Web component library for node graphs",
     "repository":  {
                        "type":  "git",
-                       "url":  "git@github.com:collidor/axon.git"
+                       "url":  "https://github.com/collidor/axon.git"
                    },
     "type":  "module",
     "exports":  {
