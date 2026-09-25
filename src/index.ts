@@ -1,5 +1,4 @@
 import { nodeRegistry } from "./nodes/nodeRegistry.ts";
-import type { AxonGraph } from "./lib/axon/components/axonGraph.component.ts";
 
 export * from "./lib/axon/components/axonBox.component.ts";
 export * from "./lib/axon/components/axonGraph.component.ts";

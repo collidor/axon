@@ -1,6 +1,5 @@
 import {
   AXON_GRAPH,
-  type AxonBoxType,
   type AxonEdgeType,
   type AxonGraphType,
   type AxonPortBaseType,

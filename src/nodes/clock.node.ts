@@ -148,7 +148,6 @@ export class ClockNode extends HTMLElement {
 
     // Manual toggle logic
     const summary = this.shadowRoot!.querySelector("summary")!;
-    const btn = this.shadowRoot!.querySelector(".toggle-btn")!;
     summary.addEventListener("click", (e) => {
       e.preventDefault();
       if ((e.target as HTMLElement).closest(".toggle-btn")) {

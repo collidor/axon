@@ -4,9 +4,9 @@ export const displayNode = {
   name: "Display",
   category: "Output",
   onMount: (
-    node: HTMLElement,
+    _node: HTMLElement,
     _graph: unknown,
-    inputs: Record<string, unknown>,
+    _inputs: Record<string, unknown>,
   ) => {
     console.log("Display node script mounted");
   },
