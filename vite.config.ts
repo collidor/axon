@@ -1,48 +1,48 @@
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
-import vueJsx from "@vitejs/plugin-vue-jsx";
-import vueDevTools from "vite-plugin-vue-devtools";
-import dts from "unplugin-dts/vite";
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
+import { resolve } from 'node:path'
+import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
-  plugins: [
-    vue({
-      template: {
-        compilerOptions: {
-          // treat all tags with a dash as custom elements
-          isCustomElement: (tag) => tag.includes("-"),
-        },
-      },
-    }),
-    vueDevTools(),
-    vueJsx({
-      isCustomElement: (tag) => tag.includes("-"),
-    }),
-    dts({
-      bundleTypes: true,
-    }),
-  ],
+  test: {
+    environment: 'jsdom',
+  },
   build: {
+    outDir: 'dist',
+    emptyOutDir: false,
     lib: {
-      entry: resolve(__dirname, "src/index.ts"),
-      name: "Axon",
-      fileName: "axon",
+      entry: {
+        index: resolve(__dirname, 'src/index.ts'),
+        core: resolve(__dirname, 'src/core/index.ts'),
+        headless: resolve(__dirname, 'src/headless.ts'),
+        systems: resolve(__dirname, 'src/systems/index.ts'),
+        nodes: resolve(__dirname, 'src/nodes/index.ts'),
+        compiler: resolve(__dirname, 'src/compiler/index.ts'),
+        state: resolve(__dirname, 'src/state/index.ts'),
+        'web-components': resolve(__dirname, 'src/web-components/index.ts'),
+      },
+      name: 'Axon',
+      fileName: (format, entryName) => `${entryName}.${format === 'es' ? 'js' : 'cjs'}`,
+      formats: ['es', 'cjs'],
     },
     rollupOptions: {
-      // make sure to externalize deps that shouldn't be bundled
-      // into your library
-      external: ["vue"],
+      external: [
+        '@collidor/command',
+        '@collidor/struct',
+        '@collidor/struct-command',
+        '@collidor/struct-event',
+        '@collidor/toolkit',
+        '@collidor/ui',
+        'zod',
+      ],
       output: {
-        // Provide global variables to use in the UMD build
-        // for externalized deps
         globals: {
-          vue: "Vue",
+          '@collidor/command': 'CollidorCommand',
+          '@collidor/struct': 'CollidorStruct',
+          '@collidor/struct-command': 'CollidorStructCommand',
+          '@collidor/struct-event': 'CollidorStructEvent',
+          '@collidor/toolkit': 'CollidorToolkit',
+          '@collidor/ui': 'CollidorUI',
         },
       },
     },
   },
-});
+})

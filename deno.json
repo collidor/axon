@@ -1,9 +1,9 @@
 {
-    "name": "@collidor/node-graph",
-    "version": "0.0.1",
+    "name": "@collidor/axon",
+    "version": "0.1.0",
     "license": "MIT",
     "exports": {
-        ".": "./src/main.ts"
+        ".": "./src/index.ts"
     },
     "publish": {
         "include": [

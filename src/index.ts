@@ -1,35 +1,33 @@
-import { nodeRegistry } from "./nodes/nodeRegistry.ts";
+// 1. Headless Core Logic & Engines (Zero-DOM)
+export * from './core/index'
 
-export * from "./lib/axon/components/axonBox.component.ts";
-export * from "./lib/axon/components/axonGraph.component.ts";
-export * from "./lib/axon/components/axonPort.component.ts";
-export * from "./lib/axon/components/axonEdge.component.ts";
-export * from "./lib/axon/components/constants.ts";
-export * from "./events/nodeMove.event.ts";
+// 2. Layout, Simulation & Transform Systems
+export * from './systems/index'
 
-document.addEventListener("axon-data-change", (e) => {
-  const node = e.target as HTMLElement;
-  const { inputs, graph } = (e as CustomEvent).detail;
-  const type = node.dataset.type;
+// 3. Transactions, State, MVCC & Diff History
+export * from './state/index'
 
-  if (type && nodeRegistry[type] && nodeRegistry[type].onUpdate) {
-    nodeRegistry[type].onUpdate(node, graph, inputs);
-  }
-});
+// 5. Host-Authoritative Networking, Persistent Identity & Multi-Window IPC
+export * from './network/identity'
+export * from './network/hostAuthoritative'
+export * from './network/multiWindowIPC'
 
-// Helper to spawn nodes dynamically
-window.spawnNode = (type: string) => {
-  const graph = document.querySelector("axon-graph") as NodeGraph;
-  const id = "n_" + Math.random().toString(36).substr(2, 5);
-  const node = document.createElement("axon-box");
-  node.id = id;
-  node.dataset.type = type;
+// 6. Web Components & Rendering
+export * from './web-components/index'
 
-  if (type && nodeRegistry[type] && nodeRegistry[type].template) {
-    node.innerHTML = nodeRegistry[type].template(id);
-    graph.appendChild(node);
-    if (nodeRegistry[type].onMount) {
-      nodeRegistry[type].onMount(node, graph);
-    }
-  }
-};
+// 7. Built-in Nodes & Schemas
+export * from './nodes/index'
+
+// 8. Event Bus & Event Registry (DI & Struct System)
+export * from './events/index'
+
+
+// 10. Graph Commands & Invertible History
+export * from './commands/graphCommands'
+export * from './commands/commandRegistry'
+
+// 11. Graph Compilation & Code Generation (Zero-Overhead JIT)
+export * from './compiler/index'
+
+// 11. UI Web Component Library (Golden Ratio & OKLCH)
+export * from '@collidor/ui'

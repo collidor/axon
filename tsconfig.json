@@ -1,29 +1,24 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": "src",
-    "target": "ES2022",
+    "target": "ESNext",
     "module": "ESNext",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "types": ["vite/client"],
-    "skipLibCheck": true,
-    "experimentalDecorators": true,
-    "useDefineForClassFields": false,
-
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "moduleDetection": "force",
-    "noEmit": true,
-
-    /* Linting */
+    "moduleResolution": "Bundler",
+    "rootDir": "..",
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "declaration": true,
+    "declarationDir": "./dist",
+    "emitDeclarationOnly": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "allowImportingTsExtensions": true,
+    "paths": {
+      "@collidor/command": ["../command/src/index.ts"],
+      "@collidor/command/*": ["../command/src/*"],
+      "@collidor/struct": ["../struct/src/index.ts"],
+      "@collidor/struct/*": ["../struct/src/*"],
+      "@collidor/ui": ["../ui/src/index.ts"],
+      "@collidor/ui/*": ["../ui/src/*"]
+    }
   },
-  "include": ["src"]
+  "include": ["src/**/*"]
 }

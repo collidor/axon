@@ -1,0 +1,501 @@
+import type { SerializedGraph } from '../../core/serialization.js'
+
+export interface NodePaletteItem {
+  type: string
+  label: string
+  category: string
+  icon: string
+  description?: string
+  initialData?: Record<string, unknown>
+}
+
+export const NODE_PALETTE_CATEGORIES: { name: string; items: NodePaletteItem[] }[] = [
+  {
+    name: 'Math & Numbers',
+    items: [
+      {
+        type: 'math',
+        label: 'Math Operation',
+        category: 'Math & Numbers',
+        icon: '∑',
+        description: 'Arithmetic operations (ADD, SUBTRACT, MULTIPLY, DIVIDE)',
+        initialData: { a: 10, b: 5, operator: 'ADD' },
+      },
+      {
+        type: 'constant',
+        label: 'Constant',
+        category: 'Math & Numbers',
+        icon: '𝝿',
+        description: 'Emits a static numeric or string constant',
+        initialData: { value: 42 },
+      },
+    ],
+  },
+  {
+    name: 'Logic & Control',
+    items: [
+      {
+        type: 'logic',
+        label: 'Boolean Logic',
+        category: 'Logic & Control',
+        icon: '⊻',
+        description: 'Logical operations (AND, OR, NOT, XOR)',
+        initialData: { operator: 'AND' },
+      },
+      {
+        type: 'compare',
+        label: 'Compare',
+        category: 'Logic & Control',
+        icon: '≗',
+        description: 'Comparison operators (==, !=, <, <=, >, >=)',
+        initialData: { operator: '==' },
+      },
+      {
+        type: 'gate',
+        label: 'Condition Gate',
+        category: 'Logic & Control',
+        icon: '⎇',
+        description: 'Passes input value conditionally based on boolean flag',
+        initialData: { open: true },
+      },
+      {
+        type: 'type-convert',
+        label: 'Type Converter',
+        category: 'Logic & Control',
+        icon: '⇄',
+        description: 'Converts between string, number, and boolean formats',
+        initialData: { targetType: 'number' },
+      },
+      {
+        type: 'feedback',
+        label: 'Feedback Latch',
+        category: 'Logic & Control',
+        icon: '🔁',
+        description: 'Decouples cycles with Z⁻¹ unit delay for state accumulation',
+        initialData: { initial: 0 },
+      },
+    ],
+  },
+  {
+    name: 'Commands & Events',
+    items: [
+      {
+        type: 'command-dispatch',
+        label: 'Command Dispatch',
+        category: 'Commands & Events',
+        icon: '🚀',
+        description: 'Executes invertible commands onto the command bus',
+        initialData: { commandName: 'DealDamageCommand', useHistory: true },
+      },
+      {
+        type: 'event',
+        label: 'Event Bus',
+        category: 'Commands & Events',
+        icon: '⚡',
+        description: 'Emits or listens to typed domain events on EventBus',
+        initialData: { eventName: 'EntityMovedEvent', mode: 'listen' },
+      },
+      {
+        type: 'change-page',
+        label: 'Change Page',
+        category: 'Commands & Events',
+        icon: '📄',
+        description: 'Dispatches navigation changes with route transition commands',
+        initialData: { page: 'Dashboard', transition: 'fade' },
+      },
+    ],
+  },
+  {
+    name: 'Data & State',
+    items: [
+      {
+        type: 'db-put',
+        label: 'Database Put',
+        category: 'Data & State',
+        icon: '💾',
+        description: 'Persists structured entities into the database layer',
+        initialData: { collection: 'users' },
+      },
+      {
+        type: 'resource',
+        label: 'Shared Resource',
+        category: 'Data & State',
+        icon: '📦',
+        description: 'Synchronized shared state observable with reactive notifications',
+        initialData: { resourceId: 'game-state' },
+      },
+      {
+        type: 'display',
+        label: 'Data Monitor',
+        category: 'Data & State',
+        icon: '📟',
+        description: 'Visual display showing live output signal telemetry',
+        initialData: { label: 'Monitor' },
+      },
+      {
+        type: 'clock',
+        label: 'Pulse Clock',
+        category: 'Data & State',
+        icon: '⏱',
+        description: 'Emits timed tick triggers at a configurable frequency (Hz)',
+        initialData: { hz: 2 },
+      },
+    ],
+  },
+  {
+    name: 'Compound & Subgraphs',
+    items: [
+      {
+        type: 'subgraph',
+        label: 'Nested Subgraph',
+        category: 'Compound & Subgraphs',
+        icon: '❖',
+        description: 'Encapsulates an entire inner node graph with drill-down navigation',
+        initialData: { name: 'Inner Subgraph' },
+      },
+      {
+        type: 'group-input',
+        label: 'Group Input Port',
+        category: 'Compound & Subgraphs',
+        icon: '⇥',
+        description: 'Exposes an external input port on a subgraph container node',
+        initialData: { name: 'input', type: 'number' },
+      },
+      {
+        type: 'group-output',
+        label: 'Group Output Port',
+        category: 'Compound & Subgraphs',
+        icon: '↦',
+        description: 'Exposes an external output port from a subgraph container node',
+        initialData: { name: 'output', type: 'number' },
+      },
+    ],
+  },
+  {
+    name: 'Audio & Music',
+    items: [
+      {
+        type: 'audio-clock',
+        label: 'Audio Clock Transport',
+        category: 'Audio & Music',
+        icon: '⏱♪',
+        description: 'Sub-millisecond audio clock with musical cycle phase (0.0 to 1.0)',
+        initialData: { bpm: 120, beatsPerCycle: 4, run: false },
+      },
+      {
+        type: 'sequence',
+        label: 'Sequence',
+        category: 'Audio & Music',
+        icon: '▶▶',
+        description: 'Musical sequence: divides cycle equally across child events',
+        initialData: { notes: ['C3', 'E3', 'G3', 'B3'], durationRatio: 0.9 },
+      },
+      {
+        type: 'parallel',
+        label: 'Parallel',
+        category: 'Audio & Music',
+        icon: '⇶',
+        description: 'Parallel musical patterns: plays child sequences simultaneously',
+        initialData: {},
+      },
+      {
+        type: 'euclidean',
+        label: 'Euclidean Rhythm',
+        category: 'Audio & Music',
+        icon: '◎',
+        description: 'Bjorklund euclidean rhythm generator with pulse rotation',
+        initialData: { hits: 3, steps: 8, rotate: 0 },
+      },
+      {
+        type: 'step-sequencer',
+        label: 'Step Sequencer',
+        category: 'Audio & Music',
+        icon: '▦♪',
+        description: '16-step visual LED drum and note sequencer grid',
+        initialData: { length: 16, rootNote: 'C3' },
+      },
+      {
+        type: 'scale-quantizer',
+        label: 'Scale Quantizer',
+        category: 'Audio & Music',
+        icon: '♯',
+        description: 'Quantizes pitches to musical scales and modes',
+        initialData: { scale: 'minor', root: 'C' },
+      },
+      {
+        type: 'chord',
+        label: 'Chord Engine',
+        category: 'Audio & Music',
+        icon: '𝄢',
+        description: 'Generates triads, 7th chords, and inversions',
+        initialData: { root: 'C4', type: 'min7', inversion: 0 },
+      },
+      {
+        type: 'arpeggiator',
+        label: 'Arpeggiator',
+        category: 'Audio & Music',
+        icon: '≋',
+        description: 'Arpeggiates input chords in up/down/random patterns',
+        initialData: { mode: 'upDown', octaves: 2 },
+      },
+      {
+        type: 'poly-synth',
+        label: 'PolySynth Engine',
+        category: 'Audio & Music',
+        icon: '🎹',
+        description: '16-voice polyphonic subtractive synthesizer with ADSR & filter',
+        initialData: { waveform: 'sawtooth', cutoff: 2500 },
+      },
+      {
+        type: 'drum-sampler',
+        label: 'Drum Sampler',
+        category: 'Audio & Music',
+        icon: '🥁',
+        description: '808 synthesized drum machine and sample player',
+        initialData: { volume: 0.85 },
+      },
+      {
+        type: 'delay',
+        label: 'Audio Delay FX',
+        category: 'Audio & Music',
+        icon: '∿',
+        description: 'Stereo feedback delay effect with wet/dry mix',
+        initialData: { time: 0.25, feedback: 0.4, mix: 0.3 },
+      },
+      {
+        type: 'reverb',
+        label: 'Reverb FX',
+        category: 'Audio & Music',
+        icon: '🏛',
+        description: 'Algorithmic room reverberation effect',
+        initialData: { decay: 2.0, mix: 0.35 },
+      },
+      {
+        type: 'bitcrusher',
+        label: 'Bitcrusher FX',
+        category: 'Audio & Music',
+        icon: '⌗',
+        description: 'Lo-fi bit reduction and sample rate downsampler',
+        initialData: { bits: 8, downsample: 4 },
+      },
+      {
+        type: 'audio-mixer',
+        label: 'Audio Mixer (4-Ch)',
+        category: 'Audio & Music',
+        icon: '🎛',
+        description: '4-channel audio summing mixer with per-channel gain and master fader',
+        initialData: { gain1: 1.0, gain2: 1.0, gain3: 1.0, gain4: 1.0, master: 1.0 },
+      },
+      {
+        type: 'master-output',
+        label: 'Master Audio Output',
+        category: 'Audio & Music',
+        icon: '🔊',
+        description: 'Final audio destination with master volume and oscilloscope',
+        initialData: { volume: 0.8 },
+      },
+    ],
+  },
+]
+
+export const PRESET_GRAPHS: Record<string, SerializedGraph> = {
+  'imperial-march': {
+    nodes: [
+      { id: 'audio-clock-1', type: 'audio-clock', x: 40, y: 380, data: { bpm: 104, beatsPerCycle: 4, run: false } },
+      {
+        id: 'lead-seq-1',
+        type: 'sequence',
+        x: 360,
+        y: 40,
+        data: {
+          notes: ['G3', 'G3', 'G3', 'Eb3', 'Bb3', 'G3', 'Eb3', 'Bb3', 'G3'],
+          durationRatio: 0.85,
+          velocity: 0.9,
+        },
+      },
+      {
+        id: 'bass-seq-1',
+        type: 'sequence',
+        x: 360,
+        y: 420,
+        data: {
+          notes: ['G2', 'G2', 'G2', 'G2', 'Eb2', 'Bb2', 'G2', 'Eb2'],
+          durationRatio: 0.8,
+          velocity: 0.85,
+        },
+      },
+      {
+        id: 'drum-seq-1',
+        type: 'sequence',
+        x: 360,
+        y: 800,
+        data: {
+          notes: ['bd', 'bd', 'bd', 'sd', 'sd', 'sd', 'bd', 'sd'],
+          durationRatio: 0.75,
+          velocity: 0.8,
+        },
+      },
+      {
+        id: 'lead-synth-1',
+        type: 'poly-synth',
+        x: 740,
+        y: 40,
+        data: { waveform: 'sawtooth', cutoff: 3200, resonance: 3.0, attack: 0.02, decay: 0.2, sustain: 0.5, release: 0.2 },
+      },
+      {
+        id: 'bass-synth-1',
+        type: 'poly-synth',
+        x: 740,
+        y: 420,
+        data: { waveform: 'square', cutoff: 1400, resonance: 4.0, attack: 0.01, decay: 0.15, sustain: 0.4, release: 0.18 },
+      },
+      {
+        id: 'drum-sampler-1',
+        type: 'drum-sampler',
+        x: 740,
+        y: 800,
+        data: { volume: 0.85 },
+      },
+      {
+        id: 'delay-fx-1',
+        type: 'delay',
+        x: 1080,
+        y: 120,
+        data: { time: 0.28, feedback: 0.25, mix: 0.2 },
+      },
+      {
+        id: 'audio-mixer-1',
+        type: 'audio-mixer',
+        x: 1360,
+        y: 360,
+        data: { gain1: 0.9, gain2: 0.85, gain3: 1.0, master: 1.0 },
+      },
+      {
+        id: 'master-out-1',
+        type: 'master-output',
+        x: 1640,
+        y: 360,
+        data: { volume: 0.85, muted: false },
+      },
+    ],
+    edges: [
+      { from: 'audio-clock-1:arc', to: 'lead-seq-1:arc' },
+      { from: 'audio-clock-1:arc', to: 'bass-seq-1:arc' },
+      { from: 'audio-clock-1:arc', to: 'drum-seq-1:arc' },
+      { from: 'lead-seq-1:events', to: 'lead-synth-1:events' },
+      { from: 'bass-seq-1:events', to: 'bass-synth-1:events' },
+      { from: 'drum-seq-1:events', to: 'drum-sampler-1:events' },
+      { from: 'lead-synth-1:audioOut', to: 'delay-fx-1:audioIn' },
+      { from: 'delay-fx-1:audioOut', to: 'audio-mixer-1:in1' },
+      { from: 'bass-synth-1:audioOut', to: 'audio-mixer-1:in2' },
+      { from: 'drum-sampler-1:audioOut', to: 'audio-mixer-1:in3' },
+      { from: 'audio-mixer-1:audioOut', to: 'master-out-1:audioIn' },
+    ],
+  },
+  'rhythm-stack': {
+    nodes: [
+      { id: 'audio-clock-1', type: 'audio-clock', x: 60, y: 180, data: { bpm: 120, run: false } },
+      { id: 'drum-seq-1', type: 'sequence', x: 380, y: 40, data: { notes: ['bd', 'sd', 'bd', 'sd', 'cp'] } },
+      { id: 'drum-sampler-1', type: 'drum-sampler', x: 740, y: 40, data: { volume: 0.9 } },
+      { id: 'bass-seq-1', type: 'sequence', x: 380, y: 340, data: { notes: ['C2', 'G2', 'Eb2', 'Bb1'] } },
+      { id: 'synth-bass-1', type: 'poly-synth', x: 740, y: 340, data: { waveform: 'sawtooth', cutoff: 1800, attack: 0.01, release: 0.25 } },
+      { id: 'audio-mixer-1', type: 'audio-mixer', x: 1080, y: 180, data: { gain1: 0.9, gain2: 0.9, master: 1.0 } },
+      { id: 'master-out-1', type: 'master-output', x: 1360, y: 180, data: { volume: 0.85, muted: false } },
+    ],
+    edges: [
+      { from: 'audio-clock-1:arc', to: 'drum-seq-1:arc' },
+      { from: 'drum-seq-1:events', to: 'drum-sampler-1:events' },
+      { from: 'audio-clock-1:arc', to: 'bass-seq-1:arc' },
+      { from: 'bass-seq-1:events', to: 'synth-bass-1:events' },
+      { from: 'drum-sampler-1:audioOut', to: 'audio-mixer-1:in1' },
+      { from: 'synth-bass-1:audioOut', to: 'audio-mixer-1:in2' },
+      { from: 'audio-mixer-1:audioOut', to: 'master-out-1:audioIn' },
+    ],
+  },
+  oscillator: {
+    nodes: [
+      { id: 'clock-1', type: 'clock', x: 80, y: 140, data: { hz: 2 } },
+      { id: 'math-1', type: 'math', x: 380, y: 120, data: { a: 10, b: 5, operator: 'ADD' } },
+      { id: 'math-2', type: 'math', x: 680, y: 120, data: { a: 1, b: 2, operator: 'MULTIPLY' } },
+      { id: 'display-1', type: 'display', x: 980, y: 130, data: { label: 'Output Hz' } },
+    ],
+    edges: [
+      { from: 'clock-1:tick', to: 'math-1:a' },
+      { from: 'math-1:result', to: 'math-2:a' },
+      { from: 'math-2:result', to: 'display-1:value' },
+    ],
+  },
+  combat: {
+    nodes: [
+      { id: 'event-moved', type: 'event', x: 80, y: 100, data: { eventName: 'EntityMovedEvent', mode: 'listen' } },
+      { id: 'cmd-damage', type: 'command-dispatch', x: 420, y: 100, data: { commandName: 'DealDamageCommand', useHistory: true } },
+      { id: 'display-status', type: 'display', x: 760, y: 110, data: { label: 'Damage Executed' } },
+    ],
+    edges: [
+      { from: 'event-moved:payload', to: 'cmd-damage:data' },
+      { from: 'cmd-damage:success', to: 'display-status:value' },
+    ],
+  },
+  transform: {
+    nodes: [
+      { id: 'const-val', type: 'constant', x: 100, y: 120, data: { value: 42 } },
+      { id: 'compare-1', type: 'compare', x: 380, y: 100, data: { b: 50, operator: '<' } },
+      { id: 'gate-1', type: 'gate', x: 680, y: 110, data: { open: true } },
+      { id: 'display-res', type: 'display', x: 960, y: 120, data: { label: 'Filtered Output' } },
+    ],
+    edges: [
+      { from: 'const-val:value', to: 'compare-1:a' },
+      { from: 'compare-1:result', to: 'gate-1:open' },
+      { from: 'const-val:value', to: 'gate-1:data' },
+      { from: 'gate-1:output', to: 'display-res:value' },
+    ],
+  },
+  subgraph: {
+    nodes: [
+      { id: 'clk-1', type: 'clock', x: 80, y: 140, data: { hz: 2 } },
+      {
+        id: 'sub-calc',
+        type: 'subgraph',
+        x: 380,
+        y: 120,
+        data: {
+          name: 'Oscillator Scaler',
+          graph: {
+            nodes: [
+              { id: 'in-tick', type: 'group-input', x: 60, y: 100, data: { name: 'tick', type: 'number' } },
+              { id: 'math-inner', type: 'math', x: 300, y: 100, data: { operator: 'MULTIPLY', b: 5 } },
+              { id: 'out-scaled', type: 'group-output', x: 560, y: 100, data: { name: 'scaled', type: 'number' } },
+            ],
+            edges: [
+              { from: 'in-tick:value', to: 'math-inner:a' },
+              { from: 'math-inner:result', to: 'out-scaled:value' },
+            ],
+          },
+        },
+      },
+      { id: 'disp-sub', type: 'display', x: 740, y: 140, data: { label: 'Scaled Tick' } },
+    ],
+    edges: [
+      { from: 'clk-1:tick', to: 'sub-calc:tick' },
+      { from: 'sub-calc:scaled', to: 'disp-sub:value' },
+    ],
+  },
+  feedback: {
+    nodes: [
+      { id: 'clk-fb', type: 'clock', x: 80, y: 140, data: { hz: 1 } },
+      { id: 'fb-latch', type: 'feedback', x: 380, y: 120, data: { initial: 0 } },
+      { id: 'math-inc', type: 'math', x: 680, y: 120, data: { b: 1, operator: 'ADD' } },
+      { id: 'disp-count', type: 'display', x: 980, y: 130, data: { label: 'Accumulator' } },
+    ],
+    edges: [
+      { from: 'clk-fb:tick', to: 'fb-latch:step' },
+      { from: 'fb-latch:output', to: 'math-inc:a' },
+      { from: 'math-inc:result', to: 'fb-latch:input' },
+      { from: 'fb-latch:output', to: 'disp-count:value' },
+    ],
+  },
+  blank: {
+    nodes: [],
+    edges: [],
+  },
+}

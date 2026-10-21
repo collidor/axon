@@ -1,0 +1,26 @@
+{
+  "name": "@collidor/axon-docs",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vp dev",
+    "build": "vp build",
+    "preview": "vp preview"
+  },
+  "dependencies": {
+    "@collidor/axon": "workspace:*",
+    "@collidor/command": "workspace:*",
+    "@collidor/struct": "workspace:*",
+    "@collidor/ui": "workspace:*",
+    "prismjs": "^1.30.0",
+    "vue": "3.6.0-rc.10"
+  },
+  "devDependencies": {
+    "@types/prismjs": "^1.26.4",
+    "@vitejs/plugin-vue": "^6.0.9",
+    "typescript": "~7.0.2",
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
+  }
+}

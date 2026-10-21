@@ -1,32 +1,22 @@
-import { baseNode } from "./base.node.ts";
+import { BaseNode, type NodeInitOptions } from '../core/base.node'
+import { NODE_TYPES } from './nodes.constants'
 
-export const displayNode = {
-  name: "Display",
-  category: "Output",
-  onMount: (
-    _node: HTMLElement,
-    _graph: unknown,
-    _inputs: Record<string, unknown>,
-  ) => {
-    console.log("Display node script mounted");
+export type DisplayInputSchema = {
+  value: unknown
+}
+
+export type DisplayOutputSchema = Record<string, never>
+
+export const displayNodeConfig: NodeInitOptions<DisplayInputSchema, DisplayOutputSchema> = {
+  nodeType: NODE_TYPES.DISPLAY,
+  inputs: {
+    value: null,
   },
-  onUpdate(
-    node: HTMLElement,
-    _graph: unknown,
-    inputs: Record<string, unknown>,
-  ) {
-    console.log("Display node script updated");
-    const val = Object.values(inputs)[0] || 0;
-    node.querySelector(".val").textContent = typeof val === "number"
-      ? val.toFixed(1)
-      : val.toString();
-  },
-  template: (id: string) =>
-    baseNode(
-      /*html*/ `<div>Display</div>`,
-      /*html*/ ` <div class="p-4 text-2xl font-bold val">0</div>`,
-      /*html*/ `
-      <axon-port-in id="${id}_in">In</axon-port-in><div></div>
-    `,
-    ),
-};
+  outputs: {},
+}
+
+export function createDisplayNode(
+  options: Partial<NodeInitOptions<DisplayInputSchema, DisplayOutputSchema>> = {},
+) {
+  return new BaseNode({ ...displayNodeConfig, ...options })
+}

@@ -1,6 +1,10 @@
-import { createApp } from "vue";
-import App from "./App.vue";
+import './web-components/index'
+import { registerCoreNodes } from './nodes/nodeLibrary'
 
-const app = createApp(App);
+registerCoreNodes()
 
-app.mount("#app");
+const app = document.getElementById('app')
+if (app) {
+  const studio = document.createElement('axon-studio')
+  app.appendChild(studio)
+}
