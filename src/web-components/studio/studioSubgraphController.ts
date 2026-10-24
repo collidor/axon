@@ -1,7 +1,7 @@
-import type { AxonGraph } from '../axonGraph.component.js'
-import type { AxonBreadcrumbs } from '../axonBreadcrumbs.component.js'
-import type { SerializedGraph } from '../../core/serialization.js'
-import { syncSubgraphPorts } from '../../nodes/subgraph.node.js'
+import type { AxonGraph } from '../axonGraph.component'
+import type { AxonBreadcrumbs } from '../axonBreadcrumbs.component'
+import type { SerializedGraph } from '../../core/serialization'
+import { syncSubgraphPorts } from '../../nodes/subgraph.node'
 
 export interface SubgraphNavigationLayer {
   nodeId: string

@@ -1,6 +1,6 @@
-import type { AxonGraph } from '../axonGraph.component.js'
-import { TAG_NAMES } from '../constants.js'
-import { AudioDriverManager } from '../../nodes/audio/driver/audioDriver.js'
+import type { AxonGraph } from '../axonGraph.component'
+import { TAG_NAMES } from '../constants'
+import { AudioDriverManager } from '../../nodes/audio/driver/audioDriver'
 
 export interface AudioTransportHost {
   graph: AxonGraph | null

@@ -1,14 +1,14 @@
-import { TAG_NAMES } from './constants.js'
-import type { AxonGraph } from './axonGraph.component.js'
-import './axonBreadcrumbs.component.js'
-import type { AxonBreadcrumbs } from './axonBreadcrumbs.component.js'
+import { TAG_NAMES } from './constants'
+import type { AxonGraph } from './axonGraph.component'
+import './axonBreadcrumbs.component'
+import type { AxonBreadcrumbs } from './axonBreadcrumbs.component'
 import { CommandHistoryManager } from '@collidor/command'
-import { AddNodeCommand, RemoveNodeCommand } from '../commands/graphCommands.js'
-import type { SerializedGraph } from '../core/serialization.js'
-import { registerCoreNodes } from '../nodes/nodeLibrary.js'
-import { compileToSource, type CompileOptions } from '../compiler/index.js'
-import { AudioDriverManager } from '../nodes/audio/driver/audioDriver.js'
-import { AUDIO_NODE_TYPES } from '../nodes/audio/audioNodes.constants.js'
+import { AddNodeCommand, RemoveNodeCommand } from '../commands/graphCommands'
+import type { SerializedGraph } from '../core/serialization'
+import { registerCoreNodes } from '../nodes/nodeLibrary'
+import { compileToSource, type CompileOptions } from '../compiler/index'
+import { AudioDriverManager } from '../nodes/audio/driver/audioDriver'
+import { AUDIO_NODE_TYPES } from '../nodes/audio/audioNodes.constants'
 import {
   type NodePaletteItem,
   NODE_PALETTE_CATEGORIES,
@@ -16,7 +16,7 @@ import {
   StudioAudioTransportController,
   StudioQuickAddController,
   StudioSubgraphController,
-} from './studio/index.js'
+} from './studio/index'
 
 // Re-export palette categories and preset graphs for backward compatibility
 export { type NodePaletteItem, NODE_PALETTE_CATEGORIES, PRESET_GRAPHS }

@@ -1,8 +1,8 @@
-import type { AxonGraph } from '../axonGraph.component.js'
+import type { AxonGraph } from '../axonGraph.component'
 import {
   NODE_PALETTE_CATEGORIES,
   type NodePaletteItem,
-} from './studioPaletteData.js'
+} from './studioPaletteData'
 
 export interface QuickAddHost {
   graph: AxonGraph | null

@@ -1,12 +1,12 @@
-import type { AxonEdgeType, AxonPortBaseType, Point } from '../constants.js'
-import { BOX_SELECTOR } from '../constants.js'
-import { escapePortId, isAxonPort } from '../helpers.js'
+import type { AxonEdgeType, AxonPortBaseType, Point } from '../constants'
+import { BOX_SELECTOR } from '../constants'
+import { escapePortId, isAxonPort } from '../helpers'
 import {
   computeBezierPath,
   isEdgeInViewport,
   createEdgeSvgGroup,
   createGhostPath,
-} from '../svgRenderer.js'
+} from '../svgRenderer'
 
 export interface EdgeMetadata {
   fromPort: AxonPortBaseType | null

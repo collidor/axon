@@ -1,6 +1,6 @@
-import type { ViewportTransformSystem } from '../../systems/viewportTransform.system.js'
-import type { AxonBoxType } from '../constants.js'
-import { getEffectiveNodeHeight } from '../../systems/magneticDAGEngine.system.js'
+import type { ViewportTransformSystem } from '../../systems/viewportTransform.system'
+import type { AxonBoxType } from '../constants'
+import { getEffectiveNodeHeight } from '../../systems/magneticDAGEngine.system'
 
 export interface GraphViewportHost {
   readonly clientWidth: number

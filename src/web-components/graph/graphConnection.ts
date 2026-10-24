@@ -1,10 +1,10 @@
-import type { Point, AxonPortBaseType } from '../constants.js'
-import { TAG_NAMES } from '../constants.js'
-import { isAxonPort } from '../helpers.js'
-import type { BaseGraph } from '../../core/base.graph.js'
-import type { SerializedEdge } from '../../core/serialization.js'
-import { AddEdgeCommand, RemoveEdgeCommand } from '../../commands/graphCommands.js'
-import type { ViewportTransformSystem } from '../../systems/viewportTransform.system.js'
+import type { Point, AxonPortBaseType } from '../constants'
+import { TAG_NAMES } from '../constants'
+import { isAxonPort } from '../helpers'
+import type { BaseGraph } from '../../core/base.graph'
+import type { SerializedEdge } from '../../core/serialization'
+import { AddEdgeCommand, RemoveEdgeCommand } from '../../commands/graphCommands'
+import type { ViewportTransformSystem } from '../../systems/viewportTransform.system'
 
 export interface GraphConnectionHost {
   classList: DOMTokenList

@@ -105,6 +105,9 @@ importers:
 
   ../struct:
     dependencies:
+      '@collidor/ui':
+        specifier: link:../ui
+        version: link:../ui
       zod:
         specifier: ^3.24.2
         version: 3.25.76

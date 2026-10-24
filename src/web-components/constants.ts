@@ -100,6 +100,7 @@ import type { LayoutNode, LayoutEngine } from '../systems/magneticDAGEngine.syst
 export type AxonGraphType = HTMLElement & {
   [AXON_GRAPH]: true
 
+  edges: AxonEdgeType[]
   dragMode: 'pan' | 'box-select'
   selectionManager: SelectionManager
   historyManager: CommandHistoryManager | null

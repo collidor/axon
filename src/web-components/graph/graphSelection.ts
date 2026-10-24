@@ -1,7 +1,7 @@
-import type { AxonBoxType, LayoutEngine } from '../constants.js'
-import { BOX_SELECTOR } from '../constants.js'
-import type { SelectionManager } from '../../systems/selectionManager.js'
-import type { ViewportTransformSystem } from '../../systems/viewportTransform.system.js'
+import type { AxonBoxType, LayoutEngine } from '../constants'
+import { BOX_SELECTOR } from '../constants'
+import type { SelectionManager } from '../../systems/selectionManager'
+import type { ViewportTransformSystem } from '../../systems/viewportTransform.system'
 
 export interface GraphSelectionHost {
   classList: DOMTokenList

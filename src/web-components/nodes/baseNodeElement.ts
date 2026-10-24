@@ -14,7 +14,7 @@ export abstract class AxonBaseNodeElement<T extends BaseNode = BaseNode> extends
   private unsubInput: (() => void) | null = null
   private unsubOutput: (() => void) | null = null
   private unsubStatus: (() => void) | null = null
-  private connectedPorts = new Set<string>()
+  public connectedPorts = new Set<string>()
 
   // oxlint-disable-next-line typescript/no-explicit-any
   abstract createEngine(options?: { id?: string; initialData?: any }): T

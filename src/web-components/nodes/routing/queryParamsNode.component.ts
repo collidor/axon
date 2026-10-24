@@ -1,9 +1,9 @@
-import { AxonBaseNodeElement } from '../baseNodeElement.js'
+import { AxonBaseNodeElement } from '../baseNodeElement'
 import {
   type QueryParamsNodeEngine,
   createQueryParamsNode,
-} from '../../../nodes/data/dataGraph.engine.js'
-import { NODE_TYPES } from '../../../nodes/nodes.constants.js'
+} from '../../../nodes/data/dataGraph.engine'
+import { NODE_TYPES } from '../../../nodes/nodes.constants'
 
 /**
  * Custom element representing all URL query parameters as a consolidated dictionary/record object.

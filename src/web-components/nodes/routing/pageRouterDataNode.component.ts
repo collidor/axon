@@ -1,9 +1,9 @@
-import { AxonBaseNodeElement } from '../baseNodeElement.js'
+import { AxonBaseNodeElement } from '../baseNodeElement'
 import {
   type PageRouterDataNodeEngine,
   createPageRouterDataNode,
-} from '../../../nodes/data/dataGraph.engine.js'
-import { NODE_TYPES } from '../../../nodes/nodes.constants.js'
+} from '../../../nodes/data/dataGraph.engine'
+import { NODE_TYPES } from '../../../nodes/nodes.constants'
 
 /**
  * Custom element representing a composite Page Router & URL node.

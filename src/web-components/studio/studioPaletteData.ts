@@ -1,4 +1,4 @@
-import type { SerializedGraph } from '../../core/serialization.js'
+import type { SerializedGraph } from '../../core/serialization'
 
 export interface NodePaletteItem {
   type: string

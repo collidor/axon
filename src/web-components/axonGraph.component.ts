@@ -10,15 +10,15 @@ import {
   type Point,
   TAG_NAMES,
   BOX_SELECTOR,
-} from './constants.js'
-import { isAxonBox, isAxonPort, isBaseNode, escapePortId, resolveNodeTagName } from './helpers.js'
-import { SelectionManager } from '../systems/selectionManager.js'
-import { BaseGraph } from '../core/base.graph.js'
-import type { SerializedGraph, SerializedNode, SerializedEdge } from '../core/serialization.js'
+} from './constants'
+import { isAxonBox, isAxonPort, isBaseNode, escapePortId, resolveNodeTagName } from './helpers'
+import { SelectionManager } from '../systems/selectionManager'
+import { BaseGraph } from '../core/base.graph'
+import type { SerializedGraph, SerializedNode, SerializedEdge } from '../core/serialization'
 import style from './axon.css?inline'
-import { TickEngine } from '../systems/tickEngine.system.js'
-import { ViewportTransformSystem } from '../systems/viewportTransform.system.js'
-import { MagneticDAGEngine } from '../systems/magneticDAGEngine.system.js'
+import { TickEngine } from '../systems/tickEngine.system'
+import { ViewportTransformSystem } from '../systems/viewportTransform.system'
+import { MagneticDAGEngine } from '../systems/magneticDAGEngine.system'
 import { Command, COMMAND_RETURN, CommandBus, type CommandHistoryManager } from '@collidor/command'
 import {
   AddNodeCommand,
@@ -29,14 +29,14 @@ import {
   RemoveEdgeCommand,
   DuplicateNodeCommand,
   SetGraphCommand,
-} from '../commands/graphCommands.js'
+} from '../commands/graphCommands'
 import {
   GraphViewportController,
   GraphConnectionController,
   GraphSelectionController,
   GraphEdgeRenderer,
   GraphAdjacencyManager,
-} from './graph/index.js'
+} from './graph/index'
 
 /**
  * Root custom element for the interactive visual node graph canvas.

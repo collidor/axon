@@ -7,19 +7,19 @@
  * - routing/ (AxonRouteParamNode, AxonQueryParamNode, AxonQueryParamsNode, AxonRouteInfoNode, AxonUrlLocationNode, AxonRouteScopeNode, AxonPageRouterDataNode)
  */
 
-import { TAG_NAMES } from '../constants.js'
-import { AxonLogicNode, AxonCompareNode, AxonGateNode } from './flow/index.js'
+import { TAG_NAMES } from '../constants'
+import { AxonLogicNode, AxonCompareNode, AxonGateNode } from './flow/index'
 import {
   AxonArrayTransformNode,
   AxonObjectTransformNode,
   AxonTypeConvertNode,
-} from './transform/index.js'
+} from './transform/index'
 import {
   AxonTableQueryNode,
   AxonTableJoinNode,
   AxonComponentOutputNode,
   AxonTableComponentNode,
-} from './data/index.js'
+} from './data/index'
 import {
   AxonRouteParamNode,
   AxonQueryParamNode,
@@ -28,13 +28,13 @@ import {
   AxonUrlLocationNode,
   AxonRouteScopeNode,
   AxonPageRouterDataNode,
-} from './routing/index.js'
+} from './routing/index'
 
 // Re-export all classes for full backward compatibility
-export * from './flow/index.js'
-export * from './transform/index.js'
-export * from './data/index.js'
-export * from './routing/index.js'
+export * from './flow/index'
+export * from './transform/index'
+export * from './data/index'
+export * from './routing/index'
 
 // Register custom elements under standard Axon tag names
 if (typeof customElements !== 'undefined') {
